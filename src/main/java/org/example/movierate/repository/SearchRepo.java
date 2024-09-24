@@ -1,6 +1,6 @@
 package org.example.movierate.repository;
 
-import org.example.movierate.Series;
+import org.example.movierate.entity.Series;
 
 import java.util.List;
 
