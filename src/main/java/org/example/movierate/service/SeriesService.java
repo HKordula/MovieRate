@@ -1,14 +1,20 @@
 package org.example.movierate.service;
 
+import org.bson.types.ObjectId;
+import org.example.movierate.dto.SeriesDto;
 import org.example.movierate.entity.Series;
+import org.example.movierate.mapper.SeriesMapper;
 import org.example.movierate.repository.SearchRepo;
 import org.example.movierate.repository.SeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SeriesService {
@@ -31,15 +37,10 @@ public class SeriesService {
         return new ResponseEntity<>(repo.save(series), HttpStatus.OK);
     }
 
-    public ResponseEntity<Series> updateSeries(int id, Series updatedSeries) {
-        Series series;
-        try {
-            series = repo.findById(id).orElseThrow(
-                    () -> new Exception("Series not exist")
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<SeriesDto> updateSeries(String id, SeriesDto updatedSeries) {
+        Series series = repo.findById(id).orElseThrow(
+                () -> new RuntimeException("Series " + id +" is not exist")
+        );
 
         series.setTitle(updatedSeries.getTitle());
         series.setDescription(updatedSeries.getDescription());
@@ -50,8 +51,11 @@ public class SeriesService {
         series.setCast(updatedSeries.getCast());
         series.setPlatform(updatedSeries.getPlatform());
 
-        return new ResponseEntity<>(repo.save(series), HttpStatus.OK);
+        Series updatedSeriesObj = repo.save(series);
+
+        return new ResponseEntity<>(SeriesMapper.mapToSeriesDto(updatedSeriesObj), HttpStatus.OK);
     }
+
 
     //public ResponseEntity<String> deleteSeries(int id) {
     //    Series series;

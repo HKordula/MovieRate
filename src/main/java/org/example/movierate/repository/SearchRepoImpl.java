@@ -3,7 +3,11 @@ package org.example.movierate.repository;
 import com.mongodb.client.MongoClient;
 import org.example.movierate.entity.Series;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -41,4 +45,8 @@ public class SearchRepoImpl implements SearchRepo{
 
         return series;
     }
+
+
+
+
 }

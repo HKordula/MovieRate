@@ -1,5 +1,7 @@
 package org.example.movierate.controller;
 
+import org.bson.types.ObjectId;
+import org.example.movierate.dto.SeriesDto;
 import org.example.movierate.entity.Series;
 import org.example.movierate.repository.SearchRepo;
 import org.example.movierate.repository.SeriesRepo;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SeriesController {
@@ -32,8 +35,8 @@ public class SeriesController {
     }
 
     @PutMapping("/series/{id}")
-    public ResponseEntity<Series> updateSeries(@PathVariable int id, @RequestBody Series series) {
-        return seriesService.updateSeries(id, series);
+    public ResponseEntity<SeriesDto> updateSeries(@PathVariable String id, @RequestBody SeriesDto updatedSeries) {
+        return seriesService.updateSeries(id, updatedSeries);
     }
 
     //@DeleteMapping("/series/{id}")
