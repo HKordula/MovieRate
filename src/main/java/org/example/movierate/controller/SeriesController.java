@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SeriesController {
@@ -26,7 +27,12 @@ public class SeriesController {
         return seriesService.getSeries();
     }
 
-    @GetMapping("/series/{text}")
+    @GetMapping("/series/{id}")
+    public ResponseEntity<Optional<Series>> getSeriesById(@PathVariable ObjectId id) {
+        return seriesService.getSeriesById(id);
+    }
+
+    @GetMapping("/series/search/{text}")
     public ResponseEntity<List<Series>> getSeries(@PathVariable String text) {
         return seriesService.findByText(text);
     }
@@ -39,6 +45,5 @@ public class SeriesController {
     @DeleteMapping("/series/{id}")
     public void deleteSeries(@PathVariable ObjectId id) {
         seriesService.deleteSeries(id);
-        System.out.println("deleted");
     }
 }

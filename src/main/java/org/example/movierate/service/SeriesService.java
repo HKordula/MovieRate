@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SeriesService {
@@ -22,16 +23,20 @@ public class SeriesService {
     @Autowired
     SearchRepo srepo;
 
+    public ResponseEntity<Series> addSeries(Series series) {
+        return new ResponseEntity<>(repo.save(series), HttpStatus.OK);
+    }
+
     public ResponseEntity<List<Series>> getSeries() {
         return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Series>> findByText(String text) {
-        return new ResponseEntity<>(srepo.findByText(text), HttpStatus.OK);
+    public ResponseEntity<Optional<Series>> getSeriesById(ObjectId id) {
+        return new ResponseEntity<>(repo.findById(id), HttpStatus.OK);
     }
 
-    public ResponseEntity<Series> addSeries(Series series) {
-        return new ResponseEntity<>(repo.save(series), HttpStatus.OK);
+    public ResponseEntity<List<Series>> findByText(String text) {
+        return new ResponseEntity<>(srepo.findByText(text), HttpStatus.OK);
     }
 
     public ResponseEntity<SeriesDto> updateSeries(ObjectId id, SeriesDto updatedSeries) {
@@ -67,6 +72,4 @@ public class SeriesService {
         repo.deleteById(id);
         new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
-
-
 }
