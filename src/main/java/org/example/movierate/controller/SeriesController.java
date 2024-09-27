@@ -3,15 +3,12 @@ package org.example.movierate.controller;
 import org.bson.types.ObjectId;
 import org.example.movierate.dto.SeriesDto;
 import org.example.movierate.entity.Series;
-import org.example.movierate.repository.SearchRepo;
-import org.example.movierate.repository.SeriesRepo;
 import org.example.movierate.service.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class SeriesController {
@@ -35,12 +32,13 @@ public class SeriesController {
     }
 
     @PutMapping("/series/{id}")
-    public ResponseEntity<SeriesDto> updateSeries(@PathVariable String id, @RequestBody SeriesDto updatedSeries) {
+    public ResponseEntity<SeriesDto> updateSeries(@PathVariable ObjectId id, @RequestBody SeriesDto updatedSeries) {
         return seriesService.updateSeries(id, updatedSeries);
     }
 
-    //@DeleteMapping("/series/{id}")
-    //public ResponseEntity<Void> deleteSeries(@PathVariable int id) {
-    //    seriesService.deleteSeries(id);
-    //}
+    @DeleteMapping("/series/{id}")
+    public void deleteSeries(@PathVariable ObjectId id) {
+        seriesService.deleteSeries(id);
+        System.out.println("deleted");
+    }
 }

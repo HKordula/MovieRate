@@ -2,7 +2,6 @@ package org.example.movierate.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.bson.BsonInt32;
 import org.bson.types.ObjectId;
 
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class SeriesDto {
-    private String Id;
+    private ObjectId Id;
     private String title;
     private String description;
     private int releaseYear;
